@@ -92,6 +92,21 @@ export function replace<T>(arr: T[], newVal: T, predicate: T | Predicate<T>, who
 }
 
 /**
+ * 数组分组
+ *  - 按照输入的数量将数组截断成几节
+ */
+export function cut<T>(arr: T[], number: number): T[][] {
+    const newArr = arr.slice();
+    const result: T[][] = [];
+
+    while (newArr.length > 0) {
+        result.push(newArr.splice(0, number));
+    }
+
+    return result;
+}
+
+/**
  * 数组去重
  *  - 如果没有输入 label 函数，则对数组元素直接去重
  *  - 如果输入了 label 函数，将会使用该函数对数组元素做一次转换，对转换之后的值进行去重，最后再映射回原数组

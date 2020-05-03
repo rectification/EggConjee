@@ -3,7 +3,7 @@ import pinyin from 'pinyin';
 import { concat } from './array';
 import { isString } from './assert';
 
-export function toPinyin(str: string) {
+export function toPinyin(str = '') {
     const str1 = str
         .replace(/([a-zA-Z0-9]+)/g, '-$1-')
         .replace(/[ -]+/g, '-')

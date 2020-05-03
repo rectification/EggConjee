@@ -3,7 +3,7 @@ import * as path from 'path';
 import { publicPath } from 'src/config/project';
 import { isString, isObject } from './assert';
 
-export const normalize = (href: string) => {
+export const normalize = (href = '') => {
     let str = href.replace(/[\\\/]+/g, '/');
 
     // 链接开始没有加上公共路径
