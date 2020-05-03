@@ -115,6 +115,10 @@ export class BaseLoader {
     protected transformEnd() {
         transformCount--;
 
+        if (transformCount < 0) {
+            transformCount = 0;
+        }
+
         this.updateDeps();
         this.notify();
         

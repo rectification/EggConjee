@@ -10,13 +10,14 @@ import { TemplateLoader } from './template';
 import * as path from 'path';
 
 import { toPinyin } from 'src/utils/string';
+import { normalize } from 'src/utils/template';
 import { site, pageConfig } from 'src/config/site';
 import { transArr, concat, cut } from 'src/utils/array';
 import { tagsPath, archivePath } from 'src/config/project';
 
 import { Template as IndexTemplate } from 'src/template/views/index';
 import { Template as TagsTemplate } from 'src/template/views/archive/tag-list';
-import { Template as YearTemplate } from 'src/template/views/archive/year-list';
+import { Template as PostTimeTemplate } from 'src/template/views/archive/post-time';
 import { Template as PostListTemplate } from 'src/template/views/archive/post-list';
 
 type OmitSiteProps<P extends object> = Omit<P, 'styleFile' | 'scriptFile'>;
@@ -95,6 +96,7 @@ export class PageLoader<P extends ReactComponent> extends BaseLoader {
             path: location,
             data: renderToString(createElement(this.template, {
                 ...prop,
+                location: normalize(location),
                 styleFile: this.attr.style,
                 scriptFile: this.attr.script,
             } as any)),
@@ -262,5 +264,5 @@ function createArchivePosts() {
         }));
     };
 
-    return new PageLoader<typeof PostListTemplate>('src/template/views/archive/post-list/index.tsx', mergeProps);
+    return new PageLoader<typeof PostTimeTemplate>('src/template/views/archive/post-time/index.tsx', mergeProps);
 }
