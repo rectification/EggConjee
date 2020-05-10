@@ -18,22 +18,22 @@ export function Header({ location }: Props) {
         {
             name: '首页',
             href: indexHref,
-            highlight: location === '/' || location === '/index.html',
+            highlight: /^\/(index\.html)?$/.test(location),
         },
-        // {
-        //     name: '归档',
-        //     href: archiveHref,
-        //     highlight: location.indexOf(archiveHref) === 0,
-        // },
+        {
+            name: '归档',
+            href: archiveHref,
+            highlight: location.indexOf(archiveHref) === 0,
+        },
         // {
         //     name: '标签',
         //     href: tagHref,
-        //     highlight: location.indexOf(tagHref) === 0,
+        //     highlight: href.indexOf(tagHref) === 0,
         // },
         {
             name: '关于',
             href: aboutHref,
-            highlight: location === '/posts/about/' || location === '/posts/about/index.html',
+            highlight: /^\/posts\/about\/(index\.html)?$/.test(location),
         },
     ];
 

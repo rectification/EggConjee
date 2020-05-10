@@ -135,7 +135,7 @@ function createIndex() {
         const indexLength = Math.ceil(postsData.length / peerPost);
 
         return Array(indexLength).fill(true).map((_, i) => ({
-            title: i === 0 ? site.title : `${site.title} | 第 ${i + 1} 页`,
+            title: i === 0 ? site.title : `第 ${i + 1} 页 · ${site.title}`,
             location: i === 0 ? 'index.html' : `page/${i + 1}/index.html`,
             pre: i === 0 ? null : i === 1 ? '' : `page/${i}/`,
             next: i === indexLength - 1 ? null : `page/${i + 1}/`,
@@ -257,7 +257,7 @@ function createArchivePosts() {
         return postsInPage.map((posts, i) => ({
             current: i,
             total: postsInPage.length,
-            title: `归档 | ${site.title}`,
+            title: `归档 · ${site.title}`,
             location: `${getUrlByPage(i + 1)}index.html`,
             getUrlByPage,
             posts,
