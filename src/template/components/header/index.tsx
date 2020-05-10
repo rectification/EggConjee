@@ -39,7 +39,7 @@ export function Header({ location }: Props) {
 
     return <header className='main-header-wrapper'>
         <span className='main-header'>
-            <a className='main-title'>
+            <a className='main-title' href={indexHref}>
                 {site.title}
             </a>
             <nav className='main-nav'>

@@ -6,6 +6,7 @@ import * as path from 'path';
 import * as project from 'src/config/project';
 
 import { parse } from 'yaml';
+import { watch } from 'chokidar';
 import { createElement } from 'react';
 import { renderToString } from 'react-dom/server';
 
@@ -37,6 +38,8 @@ interface PostMeta {
     date: string;
     /** 文章原文 */
     content: string;
+    /** 文章简介 */
+    description?: string;
     /** 是否可以被列表检索 */
     public?: boolean;
     /** 指定链接标题 */
@@ -63,6 +66,7 @@ export interface PostData {
     url: string;
     public: boolean;
     content: string;
+    description: string;
     template: PostTemplate;
     tokens: Token[];
     plugins: string[];
@@ -99,6 +103,8 @@ export class PostLoader extends BaseLoader implements PostData {
     html = '';
     /** 文章原始内容 */
     content = '';
+    /** 文章简介 */
+    description = '';
     /** 文章编译的模板 */
     template = PostTemplate.default;
     /** 文章编译后的 tokens 列表 */
@@ -127,6 +133,8 @@ export class PostLoader extends BaseLoader implements PostData {
 
         await post.read();
         await post._transform();
+
+        post.watch();
 
         return post;
     }
@@ -198,8 +206,9 @@ export class PostLoader extends BaseLoader implements PostData {
 
         this.tags = meta.tags || [];
         this.title = meta.title;
-        this.content = content.trim();
         this.url = meta.url || '';
+        this.content = (content || '').trim();
+        this.description = meta.description || this.content.slice(0, 200).replace(/[\n\r]/g, '');
         this.public = isUndef(meta.public) ? true : meta.public;
         this.date = new Date(meta.date).getTime();
         this.update = meta.update
@@ -307,5 +316,20 @@ export class PostLoader extends BaseLoader implements PostData {
             ...this.attr,
             ...this,
         }));
+    }
+
+    watch() {
+        if (process.env.NODE_ENV === 'server') {
+            const watcher = watch(this.from);
+
+            watcher
+                .on('unlink', () => this.destroy())
+                .on('change', async () => {
+                    await this.read();
+                    await this._transform();
+                });
+            
+            this.diskWatcher = [watcher];
+        }
     }
 }

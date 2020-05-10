@@ -1,15 +1,67 @@
+@import 'styles/variable.styl';
+
+Indent = 24px;
+
 post-default-style() {
     p {
-        text-indent: 2em;
-        margin-bottom: 0.8em;
+        line-height: 1.7;
+        text-Indent: 2em;
+        margin: 0 0 0.8em 0;
 
         &:last-child {
             margin-bottom: 0;
         }
     }
 
+    code {
+        margin: 0 0.2em;
+        padding: 0.2em;
+        font-size: 0.85em;
+        background-color: YellowLighter;
+        border-bottom: 0.1em solid YellowLight;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    em {
+        font-family: "EM-Lora", font-default;
+        margin: 0 3px;
+        font-style: normal;
+        text-decoration: none;
+        background-image: linear-gradient(to top, transparent, transparent 0px, BlackLighter 0px, BlackLighter 1px, transparent 1px);
+        text-shadow -1px -1px 0 #fafafa, 1px -1px 0 WhiteBg, -1px 1px 0 WhiteBg, 1px 1px WhiteBg;
+    }
+
+    s {
+        text-decoration-color: rgba(32, 32, 32, 0.5);
+    }
+
     span.softbreak {
         display: inline-block;
         width: 2em;
+    }
+
+    {h-interation()} {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-left: -1 * Indent;
+        margin-right: -1 * Indent;
+
+        .anchor {
+            font-size: .8em;
+            color: BlackLight;
+            cursor: pointer;
+            opacity: 0;
+            width: Indent;
+            font-family: font-serif;
+            transition: opacity .2s;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        &:hover .anchor {
+            opacity: 1;
+        }
     }
 }

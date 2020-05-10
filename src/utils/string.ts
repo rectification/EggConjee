@@ -3,13 +3,14 @@ import pinyin from 'pinyin';
 import { concat } from './array';
 import { isString } from './assert';
 
-export function toPinyin(str = '') {
-    const str1 = str
+export function toPinyin(str: string) {
+    const strs = concat(pinyin(str, { style: pinyin.STYLE_NORMAL }), (arr) => arr);
+
+    return strs
+        .join('-')
         .replace(/([a-zA-Z0-9]+)/g, '-$1-')
         .replace(/[ -]+/g, '-')
         .replace(/(^-|-$)/g, '');
-
-    return concat(pinyin(str1, { style: pinyin.STYLE_NORMAL }), (arr) => arr).join('');
 };
 
 export function fixHtml<T extends string | Buffer>(content: T): T {

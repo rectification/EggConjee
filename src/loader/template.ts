@@ -24,8 +24,8 @@ export class TemplateLoader<T> extends BaseLoader {
         template.from = fullPath;
         template.watch();
 
-        // 产品模式直接等于
-        if (process.env.NODE_ENV === 'production') {
+        // 非开发模式直接引用
+        if (process.env.NODE_ENV !== 'development') {
             template.template = require(template.from).Template;
         }
 

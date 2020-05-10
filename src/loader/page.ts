@@ -126,7 +126,7 @@ function createIndex() {
         create: post.date,
         tags: post.tags,
         url: path.dirname(post.output[0]?.path || ''),
-        description: (post.content || '').trim().slice(0, 200).replace(/[\n\r]/g, ''),
+        description: post.description,
     }));
 
     const mergeProps = (posts: PostLoader[]) => {

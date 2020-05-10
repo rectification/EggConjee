@@ -11,7 +11,7 @@ export function Template(props: Props) {
         <Layout {...props}>
             <section className='post-default'>
                 <header className='post-header'>
-                    <span className='post-header__title'>{props.title}</span>
+                    <h1 className='post-header__title'>{props.title}</h1>
                     <time className='post-header__create'>{Moment(props.date).format('yyyy-MM-DD')}</time>
                 </header>
                 <article
@@ -22,4 +22,3 @@ export function Template(props: Props) {
         </Layout>
     )
 }
- 
