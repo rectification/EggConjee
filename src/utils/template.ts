@@ -12,7 +12,7 @@ export const normalize = (href: string) => {
     }
 
     // 以文件结尾的链接
-    if (/\.[a-z]+$/.test(str)) {
+    if (/\.[a-z0-9]+$/.test(str)) {
         return str;
     }
 

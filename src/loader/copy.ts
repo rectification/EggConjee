@@ -11,22 +11,27 @@ import { readfiles } from 'src/utils/file-system';
 
 /** 全局唯一 copy 资源 */
 let copy: CopyLoader | null;
+/** 复制文件状态 */
+interface FromData {
+    from: string;
+    dirName?: string;
+}
 
 export class CopyLoader extends BaseLoader {
     /** 类型 */
     type = 'copy';
     /** 基础路径 */
-    base: string[] = [];
+    dirs: FromData[] = [];
 
     /** 创建图片元素 */
-    static async Create(from: string[]) {
+    static async Create(from: FromData[]) {
         if (copy) {
             return copy;
         }
 
         copy = new CopyLoader();
 
-        copy.base = from;
+        copy.dirs = from;
         copy.watch();
 
         await copy._transform();
@@ -40,12 +45,13 @@ export class CopyLoader extends BaseLoader {
         // 数据列表清空
         this.output = [];
 
-        await Promise.all(this.base.map(async (from) => {
+        await Promise.all(this.dirs.map(async ({ from, dirName }) => {
             const files = await readfiles(from);
 
             for (let i = 0; i < files.length; i++) {
                 const input = files[i];
-                const output = path.relative(from, input);
+                const relative = path.relative(from, input);
+                const output = dirName ? path.join(dirName, relative) : relative;
                 const oldData = dataMap[output];
 
                 if (this.output.some(({ path }) => path === output)) {
@@ -70,7 +76,8 @@ export class CopyLoader extends BaseLoader {
 
     watch() {
         if (process.env.NODE_ENV === 'development') {
-            const watcher = watch(this.base, {
+            const paths = this.dirs.map(({ from }) => from);
+            const watcher = watch(paths, {
                 ignored: /(^|[\/\\])\../,
                 persistent: true
             });

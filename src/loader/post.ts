@@ -204,7 +204,6 @@ export class PostLoader extends BaseLoader implements PostData {
             return;
         }
 
-        this.tags = meta.tags || [];
         this.title = meta.title;
         this.url = meta.url || '';
         this.content = (content || '').trim();
@@ -227,6 +226,7 @@ export class PostLoader extends BaseLoader implements PostData {
             }
         };
 
+        this.tags = readArr(meta.tags);
         meta.plugins = readArr(meta.plugins);
         meta.disabled = readArr(meta.disabled);
 

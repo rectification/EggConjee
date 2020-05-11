@@ -1,12 +1,15 @@
 import md5 from 'md5';
 import Stylus from 'stylus';
+import cssTree from 'css-tree';
 import CleanCss from 'clean-css';
 
-import { join } from 'path';
 import { watch } from 'chokidar';
+import { readFile } from 'fs-extra';
+import { join, basename } from 'path';
 
 import { BaseLoader } from './base';
 import { resolveRoot } from 'src/utils/path';
+import { resolvePublic } from 'src/utils/template';
 import { readfiles } from 'src/utils/file-system';
 import { templatePath } from 'src/config/project';
 
@@ -18,6 +21,8 @@ const minify = new CleanCss();
 export class StyleLoader extends BaseLoader {
     /** 类型 */
     type = 'style';
+    /** katex 样式文本 */
+    katexCss = '';
 
     static async Create() {
         if (style) {
@@ -34,7 +39,24 @@ export class StyleLoader extends BaseLoader {
         return style;
     }
 
+    async useKatex() {
+        const origin = await readFile(resolveRoot('node_modules/katex/dist/katex.css'));
+        const ast = cssTree.parse(origin.toString());
+
+        cssTree.walk(ast, function(node) {
+            if (node.type === 'Raw' && node.value.toLowerCase().indexOf('fonts') >= 0) {
+                node.value = resolvePublic('/font/katex', basename(node.value));
+            }
+        });
+
+        this.katexCss = cssTree.generate(ast);
+    }
+
     async transform() {
+        if (!this.katexCss) {
+            await this.useKatex();
+        }
+
         const files = await readfiles(templatePath);
         const styles = files.filter((file) => /\.styl$/.test(file));
         const origin = styles.map((file) => `@import '${file}';`).join('\n');
@@ -60,7 +82,7 @@ export class StyleLoader extends BaseLoader {
             ? `/css/style.${md5(data)}.css`
             : '/css/style.css';
 
-        this.output = [{ data, path }];
+        this.output = [{ data: `${data}\n${this.katexCss}`, path }];
     }
 
     watch() {
