@@ -8,6 +8,7 @@ import MarkdownAttrs from 'markdown-it-attrs';
 import MarkdownFootnote from 'markdown-it-footnote';
 
 import { MathRender } from './math';
+import { ImageRender } from './image';
 import { TitleRender } from './title';
 import { ParagraphRender } from './paragraph';
 
@@ -30,4 +31,5 @@ Markdown
     })
     .use(ParagraphRender)
     .use(TitleRender)
+    .use(ImageRender)
     .use(MathRender);

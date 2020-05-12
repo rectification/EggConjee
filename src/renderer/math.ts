@@ -7,6 +7,7 @@ export function MathRender(md: MarkdownIt) {
     md.renderer.rules.math_inline = (tokens, idx) => {
         const math = katex.renderToString(tokens[idx].content, {
             displayMode: false,
+            output: 'html',
         });
 
         return `<span class="inline-formula">${math}</span>`;
@@ -15,6 +16,7 @@ export function MathRender(md: MarkdownIt) {
     md.renderer.rules.math_block = (tokens, idx, opt, env) => {
         const math = katex.renderToString(tokens[idx].content, {
             displayMode: true,
+            output: 'html',
         });
 
         let current = labelMap[env.label];

@@ -65,6 +65,22 @@ post-default-style() {
         margin: 0 .2em;
     }
 
+    .image-block {
+        text-indent: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .image-inner {
+            max-width: 100%;
+        }
+
+        .image-title {
+            font-size: .8em;
+            color: #aaa;
+        }
+    }
+
     {h-interation()} {
         position: relative;
         display: flex;
