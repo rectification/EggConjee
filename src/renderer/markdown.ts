@@ -7,6 +7,7 @@ import MarkdownKatex from 'markdown-it-katex';
 import MarkdownAttrs from 'markdown-it-attrs';
 import MarkdownFootnote from 'markdown-it-footnote';
 
+import { MathRender } from './math';
 import { TitleRender } from './title';
 import { ParagraphRender } from './paragraph';
 
@@ -28,4 +29,5 @@ Markdown
         allowedAttributes: ['id', 'class'],
     })
     .use(ParagraphRender)
-    .use(TitleRender);
+    .use(TitleRender)
+    .use(MathRender);

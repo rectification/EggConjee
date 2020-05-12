@@ -309,7 +309,9 @@ export class PostLoader extends BaseLoader implements PostData {
 
         await this.readToken(this.tokens);
 
-        this.html = Markdown.renderer.render(this.tokens, {}, {});
+        this.html = Markdown.renderer.render(this.tokens, {}, {
+            label: `${this.from}-${Date.now()}`,
+        });
 
         this.output[0].data = renderToString(createElement(this.attr[this.template], {
             location: this.output[0].path,

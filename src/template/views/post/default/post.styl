@@ -45,6 +45,26 @@ post-default-style() {
         display: none;
     }
 
+    // 块级公式
+    .block-formula {
+        margin: 1em 0;
+        position: relative;
+
+        .formula-index {
+            position: absolute;
+            top: 0;
+            right: 8px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    // 行内公式
+    .inline-formula {
+        margin: 0 .2em;
+    }
+
     {h-interation()} {
         position: relative;
         display: flex;
