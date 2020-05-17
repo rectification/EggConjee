@@ -7,12 +7,15 @@
     box-shadow: 0 1px 3px Shadow;
 
     .post-header {
-        margin: 0 Indent;
         display: flex;
         height: 50px;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid GrayLight;
+
+        media-templte(Indent, SmallIndent, @(indent) {
+            margin: 0 indent;
+        });
 
         .post-header__title {
             color: Black;
@@ -31,7 +34,11 @@
 
     .post-article {
         font-size: 14px;
-        padding: 16px Indent;
+        
+        media-templte(Indent, SmallIndent, @(indent) {
+            padding: 16px indent;
+        });
+
         post-default-style();
     }
 }

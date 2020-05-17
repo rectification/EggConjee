@@ -4,11 +4,14 @@
     flex: 0 auto;
     font-family: font-default;
     font-weight: normal;
-    margin: 40px 0 12px 0;
     width: 100%;
     color: BlackLighter;
     text-align: center;
     font-size: 12px;
+    
+    media-templte(40px, 24px, @(indent) {
+        margin: indent 0 12px 0;
+    });
 
     .main-footer__href {
         color: Black;

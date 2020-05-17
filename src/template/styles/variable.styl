@@ -31,8 +31,20 @@ font-title= "Dancing Script";
 // 文章宽度
 width-main = 800px;
 
-// 根据宽度设定的 Media
+// 根据宽度设定范围
+pc = 'only screen and (min-width: ' + width-main + ')';
 phone = 'only screen and (max-width: ' + width-main + ')';
+
+// media 模板函数
+media-templte(pc, phone, templte) {
+    @media pc {
+        templte(pc);
+    }
+
+    @media phone {
+        templte(phone);
+    }
+}
 
 // 默认字体大小
 font-default-size = 14px;

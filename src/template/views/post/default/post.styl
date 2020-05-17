@@ -1,6 +1,7 @@
 @import 'styles/variable.styl';
 
 Indent = 24px;
+SmallIndent = 14px;
 
 post-default-style() {
     p {
@@ -85,8 +86,11 @@ post-default-style() {
         position: relative;
         display: flex;
         align-items: center;
-        margin-left: -1 * Indent;
-        margin-right: -1 * Indent;
+
+        media-templte(Indent, SmallIndent, @(indent) {
+            margin-left: -1 * indent;
+            margin-right: -1 * indent;
+        });
 
         .anchor {
             font-size: .8em;
